@@ -3,19 +3,51 @@
 <html>
 <title>Home</title>
 <script type="text/javascript">
+
+function fireGoogleRequest(payload) {
+			var googleBaseURI = "https://www.google.fr/search?q=";
+			var finalQuery = googleBaseURI + payload;
+			window.location.assign(finalQuery);	
+}
+
 function doGoogleSearch(event) {
-	if (event.keyCode == 13) {
-		var queryString = document.getElementById("searchBar").value;
-		var googleBaseURI = "https://www.google.fr/search?q=";
-		var finalQuery = googleBaseURI + queryString;
-		window.location.assign(finalQuery);
+	var inputValue = document.getElementById("searchBar").value;
+	if (event.keyCode == 13 && inputValue.length >= 1) {
+		if (inputValue.length == 1) {
+			if (inputValue == 'y') {
+				window.location.assign("https://youtube.com");
+			} else if (inputValue == 'f') {
+				window.location.assign("https://facebook.com");
+			} else if (inputValue == 'g') {
+				window.location.assign("https://github.com");
+			}
+		} else {
+			fireGoogleRequest(inputValue);
+		}
 	}
+}
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML =
+    h + " " + m + " " + s;
+    var t = setTimeout(startTime, 500);
+}
+
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
 }
 </script>
 <head>
 <style>
 html { 
-  background: url(https://source.unsplash.com/random) no-repeat center center fixed; 
+  background: url(https://source.unsplash.com/collection/1804305) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -23,17 +55,34 @@ html {
 }
 #searchBar {
 	background: rgba(0, 0, 0, 0.1);
-	border: 1px solid #eee;
+	border: 1px solid white;
 	width: 100%;
-	padding: 20px;
+	padding: 15px;
 	font-size: 25px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	font-weight: bold;
-	color: #eee;
+	font-family: Helvetica;
+	color: white;
 }
-.containerSearch {
+::placeholder {
+	color: white;
+}
+.clockContainer {
+	position: absolute;
+    top: 38%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+#clock {
+	font-size: 200px;
+    font-family: Helvetica;
+    font-weight: 100;
+    color: white;
+}
+.searchContainer {
 	width: 30%;
 	position: absolute;
     top: 60%;
@@ -43,8 +92,11 @@ html {
 }
 </style>
 </head>
-<body>
-	<div class="containerSearch">
+<body onload="startTime()">
+	<div class="clockContainer">
+		<div id="clock"></div>
+	</div>
+	<div class="searchContainer">
 		<input  id="searchBar"
 				name="user-name"
 				type="text"
