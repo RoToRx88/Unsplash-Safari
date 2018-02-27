@@ -2,6 +2,16 @@
 <!DOCTYPE html>
 <html>
 <title>Home</title>
+<script type="text/javascript">
+function doGoogleSearch(event) {
+	if (event.keyCode == 13) {
+		var queryString = document.getElementById("searchBar").value;
+		var googleBaseURI = "https://www.google.fr/search?q=";
+		var finalQuery = googleBaseURI + queryString;
+		window.location.assign(finalQuery);
+	}
+}
+</script>
 <head>
 <style>
 html { 
@@ -11,8 +21,36 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
+#searchBar {
+	background: rgba(0, 0, 0, 0.1);
+	border: 1px solid #eee;
+	width: 100%;
+	padding: 20px;
+	font-size: 25px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	font-weight: bold;
+	color: #eee;
+}
+.containerSearch {
+	width: 30%;
+	position: absolute;
+    top: 60%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
 </style>
 </head>
 <body>
+	<div class="containerSearch">
+		<input  id="searchBar"
+				name="user-name"
+				type="text"
+				placeholder="Ask the interweb"
+				required autofocus
+				onkeypress="return doGoogleSearch(event)">
+	</div>
 </body>
 </html>
